@@ -16,7 +16,11 @@ import ErrorMessage from '@/components/ErrorMessage/ErrorMessage';
 import { fetchNotes } from '@/lib/api';
 import css from './NotesPage.module.css';
 
-export default function NotesClient() {
+interface NotesClientProps {
+  tag?: string;
+}
+
+export default function NotesClient({ tag }: NotesClientProps) {
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -24,8 +28,8 @@ export default function NotesClient() {
   const perPage = 12;
 
   const { data, isError, isLoading } = useQuery({
-    queryKey: ['notes', page, search],
-    queryFn: () => fetchNotes(page, perPage, search),
+    queryKey: ['notes', page, search, tag],
+    queryFn: () => fetchNotes(page, perPage, search, tag),
     placeholderData: keepPreviousData,
   });
 

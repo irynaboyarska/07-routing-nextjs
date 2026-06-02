@@ -12,12 +12,13 @@ interface CreateNoteRequest {
   tag: string;
 }
 
- export const fetchNotes = async (page: number, perPage: number, search?: string): Promise<FetchNotesResponse> => {
+ export const fetchNotes = async (page: number, perPage: number, search?: string, tag?: string,): Promise<FetchNotesResponse> => {
     const response = await axios.get<FetchNotesResponse>(`https://notehub-public.goit.study/api/notes`, {
         params: {
-            page,
-            perPage,
-            search,
+          page,
+          perPage,
+          search,
+          ...(tag ? { tag } : {}),
         },
 
         headers: {
